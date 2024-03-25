@@ -1,29 +1,29 @@
-import './LineItem.css';
+import './LineBook.css';
 
-export default function LineItem({ lineItem, isPaid, handleChangeQty }) {
+export default function LineBook({ lineBook, isPaid, handleChangeQty }) {
   return (
-    <div className="LineItem">
-      <div className="flex-ctr-ctr">{lineItem.item.emoji}</div>
+    <div className="LineBook">
+      <div className="flex-ctr-ctr">{lineBook.book.emoji}</div>
       <div className="flex-ctr-ctr flex-col">
-        <span className="align-ctr">{lineItem.item.name}</span>
-        <span>{lineItem.item.price.toFixed(2)}</span>
+        <span className="align-ctr">{lineBook.book.name}</span>
+        <span>{lineBook.book.price.toFixed(2)}</span>
       </div>
       <div className="qty" style={{ justifyContent: isPaid && 'center' }}>
         {!isPaid &&
           <button
             className="btn-xs"
-            onClick={() => handleChangeQty(lineItem.item._id, lineItem.qty - 1)}
+            onClick={() => handleChangeQty(lineBook.book._id, lineBook.qty - 1)}
           >−</button>
         }
-        <span>{lineItem.qty}</span>
+        <span>{lineBook.qty}</span>
         {!isPaid &&
           <button
             className="btn-xs"
-            onClick={() => handleChangeQty(lineItem.item._id, lineItem.qty + 1)}
+            onClick={() => handleChangeQty(lineBook.book._id, lineBook.qty + 1)}
           >+</button>
         }
       </div>
-      <div className="ext-price">${lineItem.extPrice.toFixed(2)}</div>
+      <div className="ext-price">${lineBook.extPrice.toFixed(2)}</div>
     </div>
   );
 }

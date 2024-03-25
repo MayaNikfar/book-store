@@ -1,4 +1,4 @@
-const Item = require('../../models/item');
+const Book = require('../../models/book');
 
 module.exports = {
   index,
@@ -6,13 +6,13 @@ module.exports = {
 };
 
 async function index(req, res) {
-  const items = await Item.find({}).sort('name').populate('category').exec();
+  const books = await Book.find({}).sort('name').populate('category').exec();
   // re-sort based upon the sortOrder of the populated categories
-  items.sort((a, b) => a.category.sortOrder - b.category.sortOrder);
-  res.json(items);
+  books.sort((a, b) => a.category.sortOrder - b.category.sortOrder);
+  res.json(books);
 }
 
 async function show(req, res) {
-  const item = await Item.findById(req.params.id);
-  res.json(item);
+  const book = await Book.findById(req.params.id);
+  res.json(book);
 }

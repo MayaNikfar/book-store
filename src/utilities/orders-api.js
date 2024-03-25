@@ -7,17 +7,17 @@ export function getCart() {
   return sendRequest(`${BASE_URL}/cart`);
 }
 
-// Add an item to the cart
-export function addItemToCart(itemId) {
-  // Just send itemId for best security (no pricing)
-  return sendRequest(`${BASE_URL}/cart/items/${itemId}`, 'POST');
+// Add an book to the cart
+export function addBookToCart(bookId) {
+  // Just send bookId for best security (no pricing)
+  return sendRequest(`${BASE_URL}/cart/books/${bookId}`, 'POST');
 }
 
-// Update the item's qty in the cart
-// Will add the item to the order if not currently in the cart
+// Update the book's qty in the cart
+// Will add the book to the order if not currently in the cart
 // Sending info via the data payload instead of a long URL
-export function setItemQtyInCart(itemId, newQty) {
-  return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { itemId, newQty });
+export function setBookQtyInCart(bookId, newQty) {
+  return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { bookId, newQty });
 }
 
 // Updates the order's (cart's) isPaid property to true

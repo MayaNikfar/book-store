@@ -1,16 +1,16 @@
 import './OrderDetail.css';
-import LineItem from '../LineItem/LineItem';
+import LineBook from '../LineBook/LineBook';
 
 // Used to display the details of any order, including the cart (unpaid order)
 export default function OrderDetail({ order, handleChangeQty, handleCheckout }) {
   if (!order) return null;
 
-  const lineItems = order.lineItems.map(item =>
-    <LineItem
-      lineItem={item}
+  const lineBooks = order.lineBooks.map(book =>
+    <LineBook
+      lineBook={book}
       isPaid={order.isPaid}
       handleChangeQty={handleChangeQty}
-      key={item._id}
+      key={book._id}
     />
   );
 
@@ -24,10 +24,10 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
         }
         <span>{new Date(order.updatedAt).toLocaleDateString()}</span>
       </div>
-      <div className="line-item-container flex-ctr-ctr flex-col scroll-y">
-        {lineItems.length ?
+      <div className="line-book-container flex-ctr-ctr flex-col scroll-y">
+        {lineBooks.length ?
           <>
-            {lineItems}
+            {lineBooks}
             <section className="total">
               {order.isPaid ?
                 <span className="right">TOTAL&nbsp;&nbsp;</span>
@@ -35,7 +35,7 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
                 <button
                   className="btn-sm"
                   onClick={handleCheckout}
-                  disabled={!lineItems.length}
+                  disabled={!lineBooks.length}
                 >CHECKOUT</button>
               }
               <span>{order.totalQty}</span>
@@ -43,7 +43,7 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
             </section>
           </>
           :
-          <div className="hungry"></div>
+          <div className=""></div>
         }
       </div>
     </div>

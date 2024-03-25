@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const itemSchema = require('./itemSchema');
+const bookSchema = require('./bookSchema');
 
-const lineItemSchema = new Schema({
+const lineBookSchema = new Schema({
   qty: { type: Number, default: 1 },
-  item: itemSchema
+  book: bookSchema
 }, {
   timestamps: true,
   toJSON: { virtuals: true }
 });
 
-lineItemSchema.virtual('extPrice').get(function() {
-  // 'this' keyword is bound to the lineItem document
-  return this.qty * this.item.price;
+lineBookSchema.virtual('extPrice').get(function() {
+  // 'this' keyword is bound to the lineBook document
+  return this.qty * this.book.price;
 });
 
 const orderSchema = new Schema({
@@ -21,7 +21,7 @@ const orderSchema = new Schema({
     ref: 'User',
     required: true
   },
-  lineItems: [lineItemSchema],
+  lineBooks: [lineBookSchema],
   isPaid: { type: Boolean, default: false } 
 }, {
   timestamps: true,
@@ -29,11 +29,11 @@ const orderSchema = new Schema({
 });
 
 orderSchema.virtual('orderTotal').get(function() {
-  return this.lineItems.reduce((total, item) => total + item.extPrice, 0);
+  return this.lineBooks.reduce((total, Book) => total + Book.extPrice, 0);
 });
 
 orderSchema.virtual('orderQty').get(function() {
-  return this.lineItems.reduce((total, item) => total + item.qty, 0);
+  return this.lineBooks.reduce((total, book) => total + book.qty, 0);
 });
 
 orderSchema.virtual('orderId').get(function() {
@@ -51,39 +51,39 @@ orderSchema.statics.getCart = function(userId) {
   );
 };
 
-// Instance method for adding an item to a cart (unpaid order)
-orderSchema.methods.addItemToCart = async function (itemId) {
+// Instance method for adding an book to a cart (unpaid order)
+orderSchema.methods.addBookToCart = async function (bookId) {
   // 'this' keyword is bound to the cart (order doc)
   const cart = this;
-  // Check if the item already exists in the cart
-  const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
-  if (lineItem) {
+  // Check if the book already exists in the cart
+  const lineBook = cart.lineBooks.find(lineBook => lineBook.book._id.equals(bookId));
+  if (lineBook) {
     // It already exists, so increase the qty
-    lineItem.qty += 1;
+    lineBook.qty += 1;
   } else {
-    // Get the item from the "catalog"
+    // Get the book from the "catalog"
     // Note how the mongoose.model method behaves as a getter when passed one arg vs. two
-    const Item = mongoose.model('Item');
-    const item = await Item.findById(itemId);
-    // The qty of the new lineItem object being pushed in defaults to 1
-    cart.lineItems.push({ item });
+    const Book = mongoose.model('Book');
+    const book = await Book.findById(bookId);
+    // The qty of the new lineBook object being pushed in defaults to 1
+    cart.lineBooks.push({ book });
   }
   // return the save() method's promise
   return cart.save();
 };
 
-// Instance method to set an item's qty in the cart
-orderSchema.methods.setItemQty = function(itemId, newQty) {
+// Instance method to set an book's qty in the cart
+orderSchema.methods.setBookQty = function(bookId, newQty) {
   // this keyword is bound to the cart (order doc)
   const cart = this;
-  // Find the line item in the cart for the menu item
-  const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
-  if (lineItem && newQty <= 0) {
-    // Calling deleteOne, removes the lineItem subdoc from the cart.lineItems array
-    lineItem.deleteOne();
-  } else if (lineItem) {
+  // Find the line book in the cart for the menu book
+  const lineBook = cart.lineBooks.find(lineBook => lineBook.book._id.equals(bookId));
+  if (lineBook && newQty <= 0) {
+    // Calling deleteOne, removes the lineBook subdoc from the cart.lineBooks array
+    lineBook.deleteOne();
+  } else if (lineBook) {
     // Set the new qty - positive value is assured thanks to prev if
-    lineItem.qty = newQty;
+    lineBook.qty = newQty;
   }
   // return the save() method's promise
   return cart.save();

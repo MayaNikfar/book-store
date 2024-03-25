@@ -1,17 +1,17 @@
 import './MenuList.css';
-import MenuListItem from '../MenuListItem/MenuListItem';
+import MenuListBook from '../MenuListBook/MenuListBook';
 
-export default function MenuList({ menuItems, handleAddToOrder }) {
-  const items = menuItems.map(item =>
-    <MenuListItem
-      key={item._id}
-      menuItem={item}
+export default function MenuList({ menuBooks, handleAddToOrder }) {
+  const books = menuBooks.map(book =>
+    <MenuListBook
+      key={book._id}
+      menuBook={book}
       handleAddToOrder={handleAddToOrder}
     />
   );
   return (
     <main className="MenuList">
-      {items}
+      {books}
     </main>
   );
 }
