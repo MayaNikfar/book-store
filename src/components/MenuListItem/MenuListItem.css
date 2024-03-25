@@ -12,6 +12,15 @@
   font-size: 4vmin;
 }
 
+.MenuListItem .item-image {
+  height: 8vw;
+  width: 8vw;
+  font-size: 4vw;
+  background-color: var(--tan-1);
+  border: .1vmin solid var(--tan-3);
+  border-radius: 1vmin;
+}
+
 .MenuListItem .emoji {
   height: 8vw;
   width: 8vw;
