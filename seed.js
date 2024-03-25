@@ -18,8 +18,13 @@ const Book = require('./models/book');
     {name: 'Childrens literature', sortOrder: 70},
   ]);
 
+<<<<<<< HEAD
   await Book.deleteMany({});
   const books = await Book.create([
+=======
+  await Item.deleteMany({});
+  const items = await Item.create([
+>>>>>>> 393ea02949320f3b24a4a954e37dbb06d868f01b
     {name: 'A Tale of Two Cities', imageUrl: ['https://cdn.kobo.com/book-images/b6cc787d-79b3-4322-bfae-7bbf6ed59a77/1200/1200/False/a-tale-of-two-cities-431.jpg'], category: categories[0], price: 39.99},
     {name: 'The Kite Runner', imageUrl: ['https://m.media-amazon.com/images/I/81IzbD2IiIL._AC_UF1000,1000_QL80_.jpg'], category: categories[0], price: 38.60},
     {name: 'The Little Prince (Le Petit Prince)', imageUrl: ['https://m.media-amazon.com/images/I/61NGp-UxolL._AC_UF1000,1000_QL80_.jpg'], category: categories[1], price: 22.95},

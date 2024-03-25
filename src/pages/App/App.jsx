@@ -5,7 +5,12 @@ import { getUser } from '../../utilities/users-service';
 import AuthPage from '../AuthPage/AuthPage';
 import NewOrderPage from '../NewOrderPage/NewOrderPage';
 import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
+<<<<<<< HEAD
 import BookDetailPage from '../BookDetailPage/BookDetailPage';
+=======
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+>>>>>>> 393ea02949320f3b24a4a954e37dbb06d868f01b
 export default function App() {
   const [user, setUser] = useState(getUser());
   return (
